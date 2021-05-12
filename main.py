@@ -47,20 +47,14 @@ def check_for_win(b):
 while game_is_in_progress:
     print('\n' * 5)
     draw_board(board)
-    if turn == 1:
-        choice = int(input(f"PLAYER{turn} choose a place: "))
-        try:
-            x, y = check_for_choice(board, choice)
-        except TypeError:
-            continue
-        board[y][x] = player1
-    else:
-        choice = int(input(f"PLAYER{turn} choose a place: "))
-        try:
-            x, y = check_for_choice(board, choice)
-        except TypeError:
-            continue
-        board[y][x] = player2
+
+    choice = int(input(f"PLAYER{turn} choose a place: "))
+    try:
+        x, y = check_for_choice(board, choice)
+    except TypeError:
+        continue
+
+    board[y][x] = globals()[f'player{turn}']
 
     if game_round == 9 and not check_for_win(board):
         print('\n' * 5)
@@ -79,5 +73,4 @@ while game_is_in_progress:
     else:
         turn = 1
     game_round += 1
-
 
