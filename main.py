@@ -44,33 +44,36 @@ def check_for_win(b):
         return True
 
 
+def change_turn(t):
+    if t == 2:
+        return 1
+    else:
+        return 2
+
+
 while game_is_in_progress:
     print('\n' * 5)
     draw_board(board)
 
-    choice = int(input(f"PLAYER{turn} choose a place: "))
+    choice = input(f"PLAYER{turn} choose a place: ")
     try:
-        x, y = check_for_choice(board, choice)
-    except TypeError:
+        x, y = check_for_choice(board, int(choice))
+    except:
         continue
 
     board[y][x] = globals()[f'player{turn}']
 
     if game_round == 9 and not check_for_win(board):
         print('\n' * 5)
-        draw_board(board)
         print("DRAW")
         game_is_in_progress = False
         break
     if check_for_win(board):
         print('\n' * 5)
-        draw_board(board)
         print(f'PLAYER{turn} WON')
         game_is_in_progress = False
         break
-    if turn == 1:
-        turn = 2
-    else:
-        turn = 1
+    turn = change_turn(turn)
     game_round += 1
 
+draw_board(board)
